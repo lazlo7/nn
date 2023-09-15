@@ -13,7 +13,7 @@ int main()
     srand(time(NULL));
 
     // 2 input neurons, 2 hidden neurons, 1 output neuron.
-    size_t arch[] = { 2, 4, 4, 1 };
+    size_t arch[] = { 2, 2, 1 };
     NN nn = nn_alloc(arch, ARRAY_SIZE(arch));
     nn_rand(nn, 0, 1);
 
@@ -28,6 +28,17 @@ int main()
 
     printf("\n------------------------------\n");
     nn_print(nn);
+
+    printf("Testing:\n");
+    for (size_t i = 0; i < X.cols; ++i) {
+        Mat XCol = mat_submatrix(X, 0, i, 2, 1);
+        Mat out = nn_forward(nn, XCol);
+        float x1 = MAT_AT(XCol, 0, 0);
+        float x2 = MAT_AT(XCol, 1, 0);
+        float expected = MAT_AT(Y, 0, i);
+        float actual = MAT_AT(out, 0, 0);
+        printf("x1: %f | x2: %f | expected: %f | actual: %f\n", x1, x2, expected, actual);
+    }
 
     return 0;
 }

@@ -268,7 +268,7 @@ float nn_cost(NN nn, Mat X, Mat Y)
         Mat out = nn_forward(nn, XCol);
 
         float expected = MAT_AT(Y, 0, i);
-        float actual = MAT_AT(out, int(expected), 0);
+        float actual = MAT_AT(out, 0, 0);
         float d = actual - expected;
 
         error += d * d;
